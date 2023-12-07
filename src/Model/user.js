@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import psiSchema from "./psic";
-import dateSchema from "./agend";
+import psiSchema from "./psic.js";
+import dateSchema from "./agend.js";
 
 const userSchema = new mongoose.Schema({
 
@@ -9,9 +9,9 @@ const userSchema = new mongoose.Schema({
     CPF: { type: String },
     CEP: { type: String }, 
 
-    Psicologo: {type: psiSchema },
+    psicologo: {type: mongoose.Schema.Types.ObjectId, ref: psiSchema },
 
-    Agendamento: {type: dateSchema}
+    agendamento: {type: mongoose.Schema.Types.ObjectId, ref: dateSchema}
 
 
 

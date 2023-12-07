@@ -1,9 +1,9 @@
-import PsiSchema from "../models/psiSchema.js";
+import psiSchema from "../Model/psic.js";
 
 const psiController = {
     getPsicologos: async (req, res) => {
         try {
-            const psicologos = await PsiSchema.find();
+            const psicologos = await psiSchema.find();
             res.json(psicologos);
             console.log(psicologos);
         } catch (error) {
@@ -16,7 +16,7 @@ const psiController = {
         const { id } = req.params;
 
         try {
-            const psicologo = await PsiSchema.findById(id);
+            const psicologo = await psiSchema.findById(id);
             if (!psicologo) {
                 return res.status(404).json({ error: "Psicólogo não encontrado" });
             }
@@ -29,7 +29,7 @@ const psiController = {
 
     createPsicologo: async (req, res) => {
         try {
-            const newPsicologo = new PsiSchema(req.body);
+            const newPsicologo = new psiSchema(req.body);
             const savedPsicologo = await newPsicologo.save();
             res.json(savedPsicologo);
         } catch (error) {
@@ -42,7 +42,7 @@ const psiController = {
         const { id } = req.params;
 
         try {
-            const updatedPsicologo = await PsiSchema.findByIdAndUpdate(id, req.body, { new: true });
+            const updatedPsicologo = await psiSchema.findByIdAndUpdate(id, req.body, { new: true });
             if (!updatedPsicologo) {
                 return res.status(404).json({ error: "Psicólogo não encontrado" });
             }
@@ -57,7 +57,7 @@ const psiController = {
         const { id } = req.params;
 
         try {
-            const deletedPsicologo = await PsiSchema.findByIdAndDelete(id);
+            const deletedPsicologo = await psiSchema.findByIdAndDelete(id);
             if (!deletedPsicologo) {
                 return res.status(404).json({ error: "Psicólogo não encontrado" });
             }

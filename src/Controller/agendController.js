@@ -1,9 +1,9 @@
-import DateSchema from "../models/dateSchema.js";
+import dateSchema from "../Model/agend.js";
 
 const dateController = {
     getAgendamentos: async (req, res) => {
         try {
-            const agendamentos = await DateSchema.find();
+            const agendamentos = await dateSchema.find();
             res.json(agendamentos);
             console.log(agendamentos);
         } catch (error) {
@@ -16,7 +16,7 @@ const dateController = {
         const { id } = req.params;
 
         try {
-            const agendamento = await DateSchema.findById(id);
+            const agendamento = await dateSchema.findById(id);
             if (!agendamento) {
                 return res.status(404).json({ error: "Agendamento não encontrado" });
             }
@@ -29,7 +29,7 @@ const dateController = {
 
     createAgendamento: async (req, res) => {
         try {
-            const newAgendamento = new DateSchema(req.body);
+            const newAgendamento = new dateSchema(req.body);
             const savedAgendamento = await newAgendamento.save();
             res.json(savedAgendamento);
         } catch (error) {
@@ -42,7 +42,7 @@ const dateController = {
         const { id } = req.params;
 
         try {
-            const updatedAgendamento = await DateSchema.findByIdAndUpdate(id, req.body, { new: true });
+            const updatedAgendamento = await dateSchema.findByIdAndUpdate(id, req.body, { new: true });
             if (!updatedAgendamento) {
                 return res.status(404).json({ error: "Agendamento não encontrado" });
             }
@@ -57,7 +57,7 @@ const dateController = {
         const { id } = req.params;
 
         try {
-            const deletedAgendamento = await DateSchema.findByIdAndDelete(id);
+            const deletedAgendamento = await dateSchema.findByIdAndDelete(id);
             if (!deletedAgendamento) {
                 return res.status(404).json({ error: "Agendamento não encontrado" });
             }

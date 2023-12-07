@@ -1,9 +1,10 @@
 
+import cors from 'cors';
 import express from "express";
 import conectaNaDatabase from "./config/dbConnect.js";
 import userController from "./Controller/userController.js";
 import psiController from "./Controller/psicController.js";
-import dateController from "./Controller/agendController";
+import dateController from "./Controller/agendController.js";
 
 
 const conexao = await
@@ -19,6 +20,7 @@ conexao.on("error", (erro) => {
 
 const app = express();
 app.use(express.json());
+app.use(cors({origin: '*'}))
 
      app.get("/api/users", userController.getUser)
 
@@ -35,25 +37,25 @@ app.use(express.json());
 
      app.get("/api/psic", psiController.getPsicologos)
 
-     app.get('/api/psic/:id', psiController.getPsicById)
+     app.get('/api/psic/:id', psiController.getPsicologoById)
 
-     app.post('/api/psic', psiController.createPsic)
+     app.post('/api/psic', psiController.createPsicologo)
 
-     app.put('/api/psic/:id', psiController.updatePsic)
+     app.put('/api/psic/:id', psiController.updatePsicologo)
 
-     app.delete('/api/psic/:id', psiController.deleteUser)
+     app.delete('/api/psic/:id', psiController.deletePsicologo)
 
 
 
-     app.get("/api/meet", dateController.getPsicologos)
+     app.get("/api/meet", dateController.getAgendamentos)
 
-     app.get('/api/meet/:id', dateController.getPsicById)
+     app.get('/api/meet/:id', dateController.getAgendamentoById)
 
-     app.post('/api/meet', dateController.createPsic)
+     app.post('/api/meet', dateController.createAgendamento)
 
-     app.put('/api/meet/:id', dateController.updatePsic)
+     app.put('/api/meet/:id', dateController.updateAgendamento)
 
-     app.delete('/api/meet/:id', dateController.deleteUser)
+     app.delete('/api/meet/:id', dateController.deleteAgendamento)
 
 
 
