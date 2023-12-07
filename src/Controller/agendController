@@ -1,0 +1,72 @@
+import DateSchema from "../models/dateSchema.js";
+
+const dateController = {
+    getAgendamentos: async (req, res) => {
+        try {
+            const agendamentos = await DateSchema.find();
+            res.json(agendamentos);
+            console.log(agendamentos);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: "Erro ao obter agendamentos" });
+        }
+    },
+
+    getAgendamentoById: async (req, res) => {
+        const { id } = req.params;
+
+        try {
+            const agendamento = await DateSchema.findById(id);
+            if (!agendamento) {
+                return res.status(404).json({ error: "Agendamento não encontrado" });
+            }
+            res.json(agendamento);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: "Erro ao obter agendamento por ID" });
+        }
+    },
+
+    createAgendamento: async (req, res) => {
+        try {
+            const newAgendamento = new DateSchema(req.body);
+            const savedAgendamento = await newAgendamento.save();
+            res.json(savedAgendamento);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: "Erro ao criar agendamento" });
+        }
+    },
+
+    updateAgendamento: async (req, res) => {
+        const { id } = req.params;
+
+        try {
+            const updatedAgendamento = await DateSchema.findByIdAndUpdate(id, req.body, { new: true });
+            if (!updatedAgendamento) {
+                return res.status(404).json({ error: "Agendamento não encontrado" });
+            }
+            res.json(updatedAgendamento);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: "Erro ao atualizar agendamento" });
+        }
+    },
+
+    deleteAgendamento: async (req, res) => {
+        const { id } = req.params;
+
+        try {
+            const deletedAgendamento = await DateSchema.findByIdAndDelete(id);
+            if (!deletedAgendamento) {
+                return res.status(404).json({ error: "Agendamento não encontrado" });
+            }
+            res.json(deletedAgendamento);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: "Erro ao excluir agendamento" });
+        }
+    },
+};
+
+export default dateController;

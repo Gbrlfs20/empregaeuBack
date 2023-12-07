@@ -1,6 +1,10 @@
 
 import express from "express";
 import conectaNaDatabase from "./config/dbConnect.js";
+import userController from "./Controller/userController.js";
+import psiController from "./Controller/psicController.js";
+import dateController from "./Controller/agendController";
+
 
 const conexao = await
 conectaNaDatabase();
@@ -14,13 +18,51 @@ conexao.on("error", (erro) => {
      })
 
 const app = express();
+app.use(express.json());
+
+     app.get("/api/users", userController.getUser)
+
+
+     app.get('/api/user/:id', userController.getUserById)
+
+     app.post('/api/user', userController.createUser)
+
+     app.put('/api/user/:id', userController.updateUser)
+
+     app.delete('/api/user/:id', userController.deleteUser)
 
 
 
-const usuario = [
-{id: 1, nome: "Camilla Alves", email: "milla@gmail.com", CPF:"892384203-00", CEP: "83028-000" },
-{id: 2, nome: "João Fernando", email: "jf@gmail.com", CPF:"465324-00", CEP: "65789-000"}
-]
+     app.get("/api/psic", psiController.getPsicologos)
+
+     app.get('/api/psic/:id', psiController.getPsicById)
+
+     app.post('/api/psic', psiController.createPsic)
+
+     app.put('/api/psic/:id', psiController.updatePsic)
+
+     app.delete('/api/psic/:id', psiController.deleteUser)
+
+
+
+     app.get("/api/meet", dateController.getPsicologos)
+
+     app.get('/api/meet/:id', dateController.getPsicById)
+
+     app.post('/api/meet', dateController.createPsic)
+
+     app.put('/api/meet/:id', dateController.updatePsic)
+
+     app.delete('/api/meet/:id', dateController.deleteUser)
+
+
+
+
+
+
+
+
+
 
 
 
@@ -28,57 +70,30 @@ const usuario = [
 
    
 
-    app.post('/usuario', (req, res) => {
-        usuario.push(req.body);
-        res.status(201).send('Usuário cadastrado com Sucesso!')
-        })
+    
 
 
 
-    app.delete('/usuario/:id', (req, res) => {
-        const id = req.params.id
-        let newUsu =  buscaUsuario(id)
-        usuario.pop(newUsu);
-        res.status(201).send('Campo deletado!')
-        })
-
-
-        app.get('/usuario/:id', (req, res) => {
-            const id = req.params.id
-            let newUsu =  buscaUsuario(id) 
-            res.status(200).json(usuario[newUsu])
-            })
+    
 
 
         
 
-        app.get('/usuario', (req, res) => {
-             res.status(200).json(usuario)
-             })
+
+        
 
 
-             app.put('/usuario/:id', (req, res) => {
-                let index = buscaUsuario(req.params.id);
-                usuario[index].nome = req.body.nome;
-                res.json(usuario);
-              })
 
-              app.put('/usuario/:id', (req, res) => {
-                let index = buscaUsuario(req.params.id);
-                usuario[index].CEP = req.body.CEP;
-                res.json(usuario);
-              })
+             
         
     
 
-    function buscaUsuario(id) {
-        return usuario.findIndex(usuario => usuario.id == id)
-        }
+    
 
         
    
 
-        app.use(express.json());
+        
         
 
 
